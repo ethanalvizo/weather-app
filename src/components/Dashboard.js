@@ -4,7 +4,7 @@ import { GET_WEATHER } from '../graphql/Queries'
 
 const Dashboard = () => {
     const [search, setSearch] = useState("");
-    const [weatherQuery, {loading, data, error}] = useLazyQuery(GET_WEATHER, {
+    const [weatherQuery, { loading, data, error }] = useLazyQuery(GET_WEATHER, {
         variables: { name: search }
     })
 
@@ -19,6 +19,18 @@ const Dashboard = () => {
             <input type="text" placeholder="City name..." onChange={(event) => { setSearch(event.target.value) }} />
             <button onClick={() => weatherQuery()}>Search</button>
 
+            {data && (
+                <>
+                    <div>
+                        <h1>{data.getCityByName.name}</h1>
+                    </div>
+                    <div>
+                        <h1>Temperature: {data.getCityByName.weather.temperature.actual} </h1>
+                        <h1>Description: {data.getCityByName.weather.summary.description}</h1>
+                        <h1>Wind Speed: {data.getCityByName.weather.wind.speed}</h1>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
